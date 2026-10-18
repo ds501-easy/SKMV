@@ -1,0 +1,394 @@
+[
+  {
+    "pattern": "drop",
+    "phase": "initial",
+    "algorithm": "S-KMV",
+    "queries_per_seed": 20,
+    "rmse": 0.031537187074662056,
+    "ci_low": 0.03034650601871309,
+    "ci_high": 0.032638190296022246,
+    "relative_bias": -0.0008509045878590123,
+    "paired_rmse_difference_vs_elastic_ci": [
+      -0.000215763027820926,
+      0.00016381802064995967
+    ]
+  },
+  {
+    "pattern": "drop",
+    "phase": "initial",
+    "algorithm": "Elastic S-KMV",
+    "queries_per_seed": 20,
+    "rmse": 0.03156676747702338,
+    "ci_low": 0.03039478704374927,
+    "ci_high": 0.03265345665669883,
+    "relative_bias": -0.0021755566295056893,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "pattern": "drop",
+    "phase": "initial",
+    "algorithm": "Sliding HLL",
+    "queries_per_seed": 20,
+    "rmse": 0.06624859121844588,
+    "ci_low": 0.06361676111046827,
+    "ci_high": 0.06872571343974483,
+    "relative_bias": -0.003639946133531075,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.03200906666230213,
+      0.03731175528416417
+    ]
+  },
+  {
+    "pattern": "drop",
+    "phase": "initial",
+    "algorithm": "T-FM",
+    "queries_per_seed": 20,
+    "rmse": 0.05883191138630494,
+    "ci_low": 0.056876821697519855,
+    "ci_high": 0.06079649140445674,
+    "relative_bias": -0.002685178092235261,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.025167018052563602,
+      0.029302072833164692
+    ]
+  },
+  {
+    "pattern": "drop",
+    "phase": "late",
+    "algorithm": "S-KMV",
+    "queries_per_seed": 128,
+    "rmse": 0.12154234902469202,
+    "ci_low": 0.11960383827605206,
+    "ci_high": 0.12342250753935452,
+    "relative_bias": 0.0006778708155586749,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.08927702023214397,
+      0.09338047155519692
+    ]
+  },
+  {
+    "pattern": "drop",
+    "phase": "late",
+    "algorithm": "Elastic S-KMV",
+    "queries_per_seed": 128,
+    "rmse": 0.03018572923636528,
+    "ci_low": 0.029713903155263868,
+    "ci_high": 0.03061766693855382,
+    "relative_bias": -0.0012341846557434636,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "pattern": "drop",
+    "phase": "late",
+    "algorithm": "Sliding HLL",
+    "queries_per_seed": 128,
+    "rmse": 0.06473305569505781,
+    "ci_low": 0.06348363235907739,
+    "ci_high": 0.06597508849155165,
+    "relative_bias": 0.0009351851092964204,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.033283439325832324,
+      0.03575261114446757
+    ]
+  },
+  {
+    "pattern": "drop",
+    "phase": "late",
+    "algorithm": "T-FM",
+    "queries_per_seed": 128,
+    "rmse": 0.05821809068702009,
+    "ci_low": 0.057270053479140284,
+    "ci_high": 0.059114660328270605,
+    "relative_bias": 0.0005325568675290907,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.026944175149150155,
+      0.029056389082974907
+    ]
+  },
+  {
+    "pattern": "rise",
+    "phase": "initial",
+    "algorithm": "S-KMV",
+    "queries_per_seed": 4,
+    "rmse": 0.03130275021043576,
+    "ci_low": 0.02877922546299669,
+    "ci_high": 0.03361128615007698,
+    "relative_bias": 0.0017076824626068225,
+    "paired_rmse_difference_vs_elastic_ci": [
+      -0.00044875971716701324,
+      5.105835257967912e-06
+    ]
+  },
+  {
+    "pattern": "rise",
+    "phase": "initial",
+    "algorithm": "Elastic S-KMV",
+    "queries_per_seed": 4,
+    "rmse": 0.031511799972575034,
+    "ci_low": 0.02905543765869922,
+    "ci_high": 0.03383963447414975,
+    "relative_bias": 0.0014013312683123743,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "pattern": "rise",
+    "phase": "initial",
+    "algorithm": "Sliding HLL",
+    "queries_per_seed": 4,
+    "rmse": 0.07029111310534053,
+    "ci_low": 0.06360462100751207,
+    "ci_high": 0.07651680333049864,
+    "relative_bias": -0.00013133618810564398,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.032257753909504853,
+      0.04502339742797903
+    ]
+  },
+  {
+    "pattern": "rise",
+    "phase": "initial",
+    "algorithm": "T-FM",
+    "queries_per_seed": 4,
+    "rmse": 0.059576455655295776,
+    "ci_low": 0.05431238330270467,
+    "ci_high": 0.06479138030485837,
+    "relative_bias": 0.005605343892078447,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.022603928047509596,
+      0.03364357574017751
+    ]
+  },
+  {
+    "pattern": "rise",
+    "phase": "late",
+    "algorithm": "S-KMV",
+    "queries_per_seed": 32,
+    "rmse": 0.030952057925993513,
+    "ci_low": 0.03001397046136921,
+    "ci_high": 0.03184659847375972,
+    "relative_bias": 0.0001857186792867069,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.00025601618961812396,
+      0.000878660630048924
+    ]
+  },
+  {
+    "pattern": "rise",
+    "phase": "late",
+    "algorithm": "Elastic S-KMV",
+    "queries_per_seed": 32,
+    "rmse": 0.030383763147840463,
+    "ci_low": 0.029445084148410877,
+    "ci_high": 0.03128167977069871,
+    "relative_bias": -0.001973463150362344,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "pattern": "rise",
+    "phase": "late",
+    "algorithm": "Sliding HLL",
+    "queries_per_seed": 32,
+    "rmse": 0.06408030539864844,
+    "ci_low": 0.06152845398146322,
+    "ci_high": 0.06656651293459052,
+    "relative_bias": 0.0015390445128671654,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.031154853247610893,
+      0.036121208349964504
+    ]
+  },
+  {
+    "pattern": "rise",
+    "phase": "late",
+    "algorithm": "T-FM",
+    "queries_per_seed": 32,
+    "rmse": 0.060043227226493336,
+    "ci_low": 0.058348902939079565,
+    "ci_high": 0.0616472170523373,
+    "relative_bias": 0.00028637240258522196,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.02779540729443954,
+      0.03140035860004138
+    ]
+  },
+  {
+    "pattern": "cycle",
+    "phase": "all",
+    "algorithm": "S-KMV",
+    "queries_per_seed": 512,
+    "rmse": 0.09174492415889536,
+    "ci_low": 0.0906819307267738,
+    "ci_high": 0.09275447113136558,
+    "relative_bias": 0.00032313315287166636,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.03314312153648619,
+      0.0351187808537307
+    ]
+  },
+  {
+    "pattern": "cycle",
+    "phase": "all",
+    "algorithm": "Elastic S-KMV",
+    "queries_per_seed": 512,
+    "rmse": 0.05756893478537712,
+    "ci_low": 0.05682108112263959,
+    "ci_high": 0.058393708543744274,
+    "relative_bias": -0.006671830661157933,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "pattern": "cycle",
+    "phase": "all",
+    "algorithm": "Sliding HLL",
+    "queries_per_seed": 512,
+    "rmse": 0.06459205710563179,
+    "ci_low": 0.0640505962408589,
+    "ci_high": 0.06518275607467043,
+    "relative_bias": 0.00039085670122206845,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.006101445506776185,
+      0.007964136329508275
+    ]
+  },
+  {
+    "pattern": "cycle",
+    "phase": "all",
+    "algorithm": "T-FM",
+    "queries_per_seed": 512,
+    "rmse": 0.05872895741001689,
+    "ci_low": 0.058227825802633915,
+    "ci_high": 0.05926261407175836,
+    "relative_bias": -0.0005438375373939163,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.00027806870214538304,
+      0.002048872171888187
+    ]
+  },
+  {
+    "pattern": "cycle",
+    "phase": "late_high",
+    "algorithm": "S-KMV",
+    "queries_per_seed": 32,
+    "rmse": 0.031415985670973263,
+    "ci_low": 0.030515442622861613,
+    "ci_high": 0.03228021843685581,
+    "relative_bias": 9.731872966986175e-06,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.00047748111893529475,
+      0.001178481874174184
+    ]
+  },
+  {
+    "pattern": "cycle",
+    "phase": "late_high",
+    "algorithm": "Elastic S-KMV",
+    "queries_per_seed": 32,
+    "rmse": 0.030580276146827626,
+    "ci_low": 0.02969562131857135,
+    "ci_high": 0.031406400428682965,
+    "relative_bias": -0.002099343091528339,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "pattern": "cycle",
+    "phase": "late_high",
+    "algorithm": "Sliding HLL",
+    "queries_per_seed": 32,
+    "rmse": 0.06584331371398446,
+    "ci_low": 0.06343306195045266,
+    "ci_high": 0.06826842562985504,
+    "relative_bias": 0.0020213588606949376,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.03281221862076669,
+      0.037882229838685014
+    ]
+  },
+  {
+    "pattern": "cycle",
+    "phase": "late_high",
+    "algorithm": "T-FM",
+    "queries_per_seed": 32,
+    "rmse": 0.05829215362876887,
+    "ci_low": 0.0563116180685751,
+    "ci_high": 0.060289211115149746,
+    "relative_bias": -0.0012676803484366094,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.025787620792032732,
+      0.02958128527818071
+    ]
+  },
+  {
+    "pattern": "cycle",
+    "phase": "late_low",
+    "algorithm": "S-KMV",
+    "queries_per_seed": 32,
+    "rmse": 0.12467295328190371,
+    "ci_low": 0.12028351775839274,
+    "ci_high": 0.12888223120638337,
+    "relative_bias": -0.0027703956244489263,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.06673146381768492,
+      0.07541827504603704
+    ]
+  },
+  {
+    "pattern": "cycle",
+    "phase": "late_low",
+    "algorithm": "Elastic S-KMV",
+    "queries_per_seed": 32,
+    "rmse": 0.05349618586799518,
+    "ci_low": 0.052247456294816134,
+    "ci_high": 0.05470826014494689,
+    "relative_bias": -0.0060731579664653505,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "pattern": "cycle",
+    "phase": "late_low",
+    "algorithm": "Sliding HLL",
+    "queries_per_seed": 32,
+    "rmse": 0.06398497231561114,
+    "ci_low": 0.062224643195204314,
+    "ci_high": 0.06576817105084415,
+    "relative_bias": -5.428928939842474e-05,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.008532355786909378,
+      0.01260442371016564
+    ]
+  },
+  {
+    "pattern": "cycle",
+    "phase": "late_low",
+    "algorithm": "T-FM",
+    "queries_per_seed": 32,
+    "rmse": 0.05817834758093537,
+    "ci_low": 0.05597207885779363,
+    "ci_high": 0.060365934690904045,
+    "relative_bias": 0.0002289066680099812,
+    "paired_rmse_difference_vs_elastic_ci": [
+      0.002172086125495462,
+      0.007240893979300024
+    ]
+  }
+]
