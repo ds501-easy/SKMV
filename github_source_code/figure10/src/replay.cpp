@@ -4,19 +4,33 @@
 #include <iomanip>
 #include <iostream>
 using namespace wrapped;
+// Driver variables: a = S-KMV, e = Elastic S-KMV, h = Sliding HLL,
+// f = T-FM; Figure 10 also uses v = VATE-LC. Each method receives
+// the same item hashes and query times, while keeping independent state.
+
+// 81 log-spaced cardinalities, 10^3 through 10^7. Index 0 is the smoke run.
 std::vector<u64> grid(){std::vector<u64> v;for(int j=0;j<=80;++j)v.push_back(std::llround(std::pow(10.,3+j/20.)));return v;}
+// budget is memory in bits; m is the HLL register count; ks/ke are the
+// two KMV capacities. These layouts come from data/layouts.csv, not retuning.
 void execute(unsigned budget,unsigned m,unsigned ks,unsigned ke,unsigned trials,unsigned offset,int index,const std::string&path){
  std::ofstream out(path);if(!out)throw std::runtime_error("output open");
  out<<"algorithm,budget_bits,allocated_bits,m,k,cardinality,trial,query,time,wrapped_time,estimate,saturated,hll_peak,hll_capacity\n"<<std::setprecision(17);
+ // Normalize HLL once for this layout, not once per arrival.
  double alpha_m=stable_alpha(m);unsigned idx=0;
  for(u64 n:grid()){if(index>=0&&idx++!=unsigned(index))continue;
   for(unsigned trial=offset;trial<offset+trials;++trial){u64 seed=mix(20261013+trial);
    KMV32 a(budget,false,ks),e(budget,true,ke);FM f(budget);VATE v(budget);HLL5 h(budget,m);h.alpha_m=alpha_m;
+   // Replay three complete windows. VATE has its own modulo-200 clock.
    for(unsigned t=0;t<3*W;++t){unsigned tm=t%PERIOD;v.tick(t%200);
+    // Maintain idle buckets too, before wrapped timestamps can look recent.
     if(t%MAINTENANCE==0){a.maintenance(tm);e.maintenance(tm);f.maintenance(tm);h.maintenance(tm);}
+    // Integer endpoints divide exactly n distinct IDs over W slots. The
+    // epoch offset prevents reuse of IDs in subsequent windows.
     unsigned epoch=t/W,slot=t%W;u64 lo=(u64(slot)*n+W-1)/W,hi=(u64(slot+1)*n+W-1)/W;
     for(u64 j=lo;j<hi;++j){u64 x=epoch*n+j,bh=mix(x^seed),rank=mix(x^mix(seed+1));
      a.update(bh,rank,tm);e.update(bh,rank,tm);f.update(bh,rank,tm);h.update(bh,rank,tm);v.update(bh,t%200);}
+    // Query at the first full window and then every quarter window: nine
+    // observations per method/trial. No sketch reset occurs between queries.
     if(t>=99&&(t-99)%25==0){
      auto emit=[&](const char* name,unsigned registers,unsigned k,double est,bool sat=false){out<<name<<','<<budget<<','<<a.a.capacity()<<','<<registers<<','<<k<<','<<n<<','<<trial<<','<<(t-99)/25<<','<<t<<','<<tm<<','<<est<<','<<sat<<','<<h.peak<<','<<h.capacity<<'\n';};
      bool sat=false;double ve=v.query(t%200,&sat);
