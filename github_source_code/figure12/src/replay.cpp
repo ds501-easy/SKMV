@@ -4,6 +4,10 @@
 #include <iomanip>
 #include <iostream>
 using namespace wrapped;
+// Driver variables: a = S-KMV, e = Elastic S-KMV, h = Sliding HLL,
+// f = T-FM; Figure 10 also uses v = VATE-LC. Each method receives
+// the same item hashes and query times, while keeping independent state.
+
 int main(int argc,char**argv){try{
  if(argc!=7)throw std::runtime_error("pattern windows seed_start seed_count output budget");
  std::string pattern=argv[1];unsigned windows=std::stoul(argv[2]),start=std::stoul(argv[3]),seeds=std::stoul(argv[4]),budget=std::stoul(argv[6]);
@@ -11,20 +15,28 @@ int main(int argc,char**argv){try{
  if(!seeds||!windows||windows>(pattern=="rise"?128u:512u)||(pattern!="drop"&&pattern!="rise"&&pattern!="cycle"))throw std::runtime_error("schedule");
  std::ofstream out(argv[5]);if(!out)throw std::runtime_error("output");
  out<<std::setprecision(17)<<"pattern,seed,window,truth,skmv_estimate,elastic_estimate,hll_estimate,tfm_estimate,hll_used,hll_peak,hll_capacity,hll_registers,tfm_registers,allocated_bits\n";
+ // Fixed equal-memory layouts used by the saved dynamic-rate experiment.
  const unsigned registers=budget==1000?4:256;
  const double alpha_m=stable_alpha(registers);
  for(unsigned s=start;s<start+seeds;++s){
   KMV32 a(budget,false,budget==1000?22:248),e(budget,true,budget==1000?21:247);
   HLL5 h(budget,registers);h.alpha_m=alpha_m;FM f(budget);
   if(h.capacity!=(budget==1000?48:1964)||f.m!=(budget==1000?3:173)||h.a.capacity()!=f.a.capacity())throw std::runtime_error("layout");
+  // x increases throughout the seed's replay, so each arrival is distinct.
+  // State and identifiers continue across rate changes; neither is reset.
   u64 seed=mix(20261017+s),salt=mix(seed+1),x=0;
   for(unsigned w=0;w<windows;++w){
+   // w is zero-based: drop after 20 epochs, rise after 4, or alternate
+   // every 64 epochs. Each epoch contains exactly W time slots.
    bool high=pattern=="drop"?w<20:pattern=="rise"?w>=4:(w/64)%2==0;
    unsigned per_slot=high?10000:625;
    for(unsigned slot=0;slot<W;++slot){unsigned t=w*W+slot,tm=t%PERIOD;
+    // Visit all buckets, even idle ones, to maintain cyclic-clock state.
     if(t%MAINTENANCE==0){a.maintenance(tm);e.maintenance(tm);h.maintenance(tm);f.maintenance(tm);}
     for(unsigned j=0;j<per_slot;++j,++x){u64 bh=mix(x^seed),rh=mix(x^salt);a.update(bh,rh,tm);e.update(bh,rh,tm);h.update(bh,rh,tm);f.update(bh,rh,tm);}
    }
+   // Query after the epoch's final slot. Since all IDs are distinct, the
+   // exact window cardinality here is per_slot*W. CSV epochs are one-based.
    unsigned tm=((w+1)*W-1)%PERIOD;double av=a.query(tm),ev=e.query(tm),hv=h.query(tm),fv=f.query(tm);
    if(!std::isfinite(av)||!std::isfinite(ev)||av<0||ev<0||!std::isfinite(hv)||!std::isfinite(fv)||hv<0||fv<0)throw std::runtime_error("invalid estimate");
    out<<pattern<<','<<s<<','<<w+1<<','<<per_slot*W<<','<<av<<','<<ev<<','<<hv<<','<<fv<<','<<h.used<<','<<h.peak<<','<<h.capacity<<','<<h.m<<','<<f.m<<','<<h.a.capacity()<<'\n';
