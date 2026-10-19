@@ -10,6 +10,7 @@ g.add_argument('--full',action='store_true',help='Replay the full original workl
 p.add_argument('--output',type=Path,default=ROOT/'outputs')
 p.add_argument('--cxx',default=os.environ.get('CXX','c++'))
 args=p.parse_args()
+# Keep compilation local to this experiment; neither folder depends on the other.
 build=ROOT/'build';build.mkdir(exist_ok=True)
 exe=build/'replay'
 subprocess.run(shlex.split(args.cxx)+['-O3','-std=c++17',str(ROOT/'src/replay.cpp'),'-o',str(exe)],check=True)
@@ -17,6 +18,7 @@ out=args.output/('smoke' if args.smoke else 'replay');out.mkdir(parents=True,exi
 def load(path):
  with (gzip.open(path,'rt') if str(path).endswith('.gz') else path.open()) as f:
   return list(csv.DictReader(f))
+# Compare numerical results, not byte-identical CSV formatting across compilers.
 def same(a,b,fields):
  for key in fields:
   if not math.isclose(float(a[key]),float(b[key]),rel_tol=1e-11,abs_tol=1e-10):
@@ -25,6 +27,7 @@ def execute(command,target):
  if target.exists():raise FileExistsError(f'Refusing to overwrite {target}; choose another --output directory.')
  subprocess.run(command,check=True)
 
+# Smoke mode uses an original-data subset; full mode replays every saved seed.
 verified=0
 for b in [1000,50000]:
  schedules=[('rise',8)] if args.smoke else [('drop',512),('rise',128),('cycle',512)]

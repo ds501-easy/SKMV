@@ -11,6 +11,8 @@ parser.add_argument('--memory',type=int,choices=[1000,50000],required=True)
 args=parser.parse_args();b=args.memory;O=args.output;O.mkdir(parents=True,exist_ok=True)
 algorithms=['S-KMV','Elastic S-KMV','Sliding HLL','T-FM']
 keys=['skmv_estimate','elastic_estimate','hll_estimate','tfm_estimate']
+# Bootstrap complete seed trajectories together across all four methods.
+# Queries within a seed share sketch history and are not independent trials.
 rng=np.random.default_rng(20261018);ix=rng.integers(0,60,(2000,60))
 curves=[];scores=[];checks={};hashes={};peak=0
 for pattern,windows in [('drop',512),('rise',128),('cycle',512)]:
@@ -37,6 +39,8 @@ for pattern,windows in [('drop',512),('rise',128),('cycle',512)]:
  assert np.all(truth==np.where(high,1000000,62500))
  est=np.stack([arr(k) for k in keys],axis=2);assert np.isfinite(est).all() and (est>=0).all()
  err=est/truth[:,:,None]-1
+ # Pool squared relative errors within each displayed time group, then take
+ # the square root. Grouping does not smooth or replace the stored estimates.
  if pattern=='drop':groups=[np.arange(a,a+4) for a in range(0,20,4)]+[np.arange(a,min(a+8,windows)) for a in range(20,windows,8)]
  else:groups=[np.arange(a,min(a+4,windows)) for a in range(0,windows,4)]
  for g in groups:
