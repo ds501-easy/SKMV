@@ -27,6 +27,7 @@ Q=9; summary=[];audit={}; groups={};layouts=[]
 rng=np.random.default_rng(2026101301)
 for b in BUDGETS:
  TRIALS=100 if b==1000 else 20
+ # Resample whole trials: the nine queries in each share sketch history.
  bs=rng.integers(0,TRIALS,(2000,TRIALS))
  layout=layout_rows[b]
  expected_m={a:int(layout[k]) for a,k in zip(ALGS,['hll_m','skmv_m','elastic_m','vate_m','tfm_m'])}
@@ -46,6 +47,7 @@ for b in BUDGETS:
   values[a][ni[n],t,q]=v/n-1;saturation[a][ni[n],t,q]=int(r['saturated'])!=0
  for a in ALGS:
   assert np.isfinite(values[a]).all()
+  # Pool squared relative errors first, then take the root (RRMSE).
   err=values[a];pertrial=(err**2).mean(axis=2);rmse=np.sqrt(pertrial.mean(axis=1))
   interval=np.quantile(np.sqrt(pertrial[:,bs].mean(axis=2)),[.025,.975],axis=1)
   groups[b,a]=(rmse,interval[0],interval[1])
